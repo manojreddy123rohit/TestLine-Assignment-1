@@ -1,0 +1,181 @@
+{
+  "timelineData": [
+    {
+      "submitted_at": "2024-12-11 20:36:44.822000+05:30",
+      "accuracy": 0.66,
+      "mistakes_corrected": 0
+    },
+    {
+      "submitted_at": "2024-12-28 22:58:52.969000+05:30",
+      "accuracy": 0.43,
+      "mistakes_corrected": 0
+    },
+    {
+      "submitted_at": "2025-01-11 21:03:43.251000+05:30",
+      "accuracy": 0.84,
+      "mistakes_corrected": 0
+    },
+    {
+      "submitted_at": "2025-01-11 21:20:08.641000+05:30",
+      "accuracy": 0.93,
+      "mistakes_corrected": 12
+    },
+    {
+      "submitted_at": "2025-01-13 13:12:40.687000+05:30",
+      "accuracy": 1.0,
+      "mistakes_corrected": 0
+    },
+    {
+      "submitted_at": "2025-01-13 13:28:12.784000+05:30",
+      "accuracy": 1.0,
+      "mistakes_corrected": 4
+    },
+    {
+      "submitted_at": "2025-01-13 16:10:03.743000+05:30",
+      "accuracy": 0.3,
+      "mistakes_corrected": 0
+    },
+    {
+      "submitted_at": "2025-01-15 15:36:46.410000+05:30",
+      "accuracy": 0.5,
+      "mistakes_corrected": 0
+    },
+    {
+      "submitted_at": "2025-01-15 15:57:12.791000+05:30",
+      "accuracy": 0.38,
+      "mistakes_corrected": 0
+    },
+    {
+      "submitted_at": "2025-01-15 20:34:39.462000+05:30",
+      "accuracy": 0.31,
+      "mistakes_corrected": 0
+    },
+    {
+      "submitted_at": "2025-01-16 20:00:11.562000+05:30",
+      "accuracy": 0.9,
+      "mistakes_corrected": 1
+    },
+    {
+      "submitted_at": "2025-01-16 20:13:19.682000+05:30",
+      "accuracy": 0.96,
+      "mistakes_corrected": 11
+    },
+    {
+      "submitted_at": "2025-01-17 15:17:44.042000+05:30",
+      "accuracy": 1.0,
+      "mistakes_corrected": 3
+    },
+    {
+      "submitted_at": "2025-01-17 15:30:18.027000+05:30",
+      "accuracy": 0.9,
+      "mistakes_corrected": 9
+    }
+  ],
+  "topicPerformance": [
+    {
+      "quiz_topic": "microbes in human welfare",
+      "avg_accuracy": 1.0,
+      "attempt_count": 1,
+      "total_mistakes_corrected": 4,
+      "avg_mistakes_corrected": 4.0,
+      "avg_improvement": 0.0
+    },
+    {
+      "quiz_topic": "human health and disease ",
+      "avg_accuracy": 0.93,
+      "attempt_count": 1,
+      "total_mistakes_corrected": 12,
+      "avg_mistakes_corrected": 12.0,
+      "avg_improvement": 0.09
+    },
+    {
+      "quiz_topic": "reproductive health ",
+      "avg_accuracy": 0.92,
+      "attempt_count": 2,
+      "total_mistakes_corrected": 0,
+      "avg_mistakes_corrected": 0.0,
+      "avg_improvement": 0.24
+    },
+    {
+      "quiz_topic": "Body Fluids and Circulation ",
+      "avg_accuracy": 0.8,
+      "attempt_count": 3,
+      "total_mistakes_corrected": 4,
+      "avg_mistakes_corrected": 1.333,
+      "avg_improvement": 0.277
+    },
+    {
+      "quiz_topic": "Body Fluids and Circulation",
+      "avg_accuracy": 0.723,
+      "attempt_count": 3,
+      "total_mistakes_corrected": 20,
+      "avg_mistakes_corrected": 6.667,
+      "avg_improvement": -0.037
+    },
+    {
+      "quiz_topic": "Respiration and Gas Exchange",
+      "avg_accuracy": 0.66,
+      "attempt_count": 1,
+      "total_mistakes_corrected": 0,
+      "avg_mistakes_corrected": 0.0,
+      "avg_improvement": NaN
+    },
+    {
+      "quiz_topic": "Reproductive Health",
+      "avg_accuracy": 0.43,
+      "attempt_count": 1,
+      "total_mistakes_corrected": 0,
+      "avg_mistakes_corrected": 0.0,
+      "avg_improvement": -0.23
+    },
+    {
+      "quiz_topic": "Human Reproduction",
+      "avg_accuracy": 0.38,
+      "attempt_count": 1,
+      "total_mistakes_corrected": 0,
+      "avg_mistakes_corrected": 0.0,
+      "avg_improvement": -0.12
+    },
+    {
+      "quiz_topic": "principles of inheritance and variation ",
+      "avg_accuracy": 0.3,
+      "attempt_count": 1,
+      "total_mistakes_corrected": 0,
+      "avg_mistakes_corrected": 0.0,
+      "avg_improvement": -0.7
+    }
+  ],
+  "insights": {
+    "trending": {
+      "recent_accuracy": 0.9533333333333333,
+      "overall_accuracy": 0.7221428571428572,
+      "improvement": "True"
+    },
+    "topics": {
+      "strong": [
+        "microbes in human welfare",
+        "human health and disease ",
+        "reproductive health ",
+        "Body Fluids and Circulation ",
+        "Body Fluids and Circulation"
+      ],
+      "weak": [
+        "Reproductive Health",
+        "Human Reproduction",
+        "principles of inheritance and variation "
+      ],
+      "needs_practice": [
+        "microbes in human welfare",
+        "human health and disease ",
+        "Respiration and Gas Exchange",
+        "Reproductive Health",
+        "Human Reproduction",
+        "principles of inheritance and variation "
+      ]
+    },
+    "learning": {
+      "mistake_correction_rate": 2.857142857142857,
+      "recent_corrections": 7.666666666666667
+    }
+  }
+}
