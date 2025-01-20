@@ -1,7 +1,15 @@
 import json
 import pandas as pd
 import requests
-from utils import (process_current_quiz_data, process_historical_quiz_data, create_expanded_options, analyze_and_recommend, calculate_topic_stats, prepare_visualization_data)
+from utils import (
+    process_current_quiz_data, 
+    process_historical_quiz_data, 
+    create_expanded_options, 
+    analyze_and_recommend, 
+    calculate_topic_stats, 
+    prepare_visualization_data,
+    create_visualizations  # Add this new import
+)
 
 def main():
     # Step 1: Load data from APIs
@@ -9,9 +17,13 @@ def main():
     current_quiz_endpoint_url = "https://www.jsonkeeper.com/b/LLQT"
     historical_quiz_url = "https://api.jsonserve.com/XgAgFJ"
 
-    current_quiz_submission_data = requests.get(current_quiz_submission_url).json()
-    current_quiz_endpoint_data = requests.get(current_quiz_endpoint_url).json()
-    historical_quiz_data = requests.get(historical_quiz_url).json()
+    try:
+        current_quiz_submission_data = requests.get(current_quiz_submission_url).json()
+        current_quiz_endpoint_data = requests.get(current_quiz_endpoint_url).json()
+        historical_quiz_data = requests.get(historical_quiz_url).json()
+    except requests.RequestException as e:
+        print(f"Error fetching data: {e}")
+        return
 
     # Step 2: Process Current Quiz Data
     current_quiz_df = process_current_quiz_data(current_quiz_endpoint_data)
@@ -35,26 +47,35 @@ def main():
     topic_stats = calculate_topic_stats(historical_quiz_df)
 
     # Step 8: Generate insights and recommendations
-    insights, recommendations = analyze_and_recommend(historical_quiz_df, topic_stats)
+    insights, recommendations, persona, performance_labels = analyze_and_recommend(historical_quiz_df, topic_stats)
+
+    # Step 9: Generate visualizations
+    create_visualizations(historical_quiz_df, topic_stats, insights)
 
     # Display results
-    print("\n=== STUDENT PERFORMANCE ANALYSIS ===")
+    print("\n" + "="*50)
+    print("        STUDENT PERFORMANCE ANALYSIS REPORT        ")
+    print("="*50)
+
     print("\n1. PERFORMANCE OVERVIEW")
+    print("-"*30)
     print(f"• Overall Accuracy: {insights['trending']['overall_accuracy']:.1%}")
     print(f"• Recent Performance: {insights['trending']['recent_accuracy']:.1%}")
     print(f"• Trend: {'Improving' if insights['trending']['improvement'] else 'Needs Attention'}")
     print(f"• Average Mistakes Corrected: {insights['learning']['mistake_correction_rate']:.1f}")
 
     print("\n2. TOPIC MASTERY")
+    print("-"*30)
     print("\nStrong Topics (≥70% accuracy):")
     for topic in insights['topics']['strong']:
         print(f"• {topic}")
-        
+    
     print("\nWeak Topics (<60% accuracy):")
     for topic in insights['topics']['weak']:
         print(f"• {topic}")
 
     print("\n3. RECOMMENDED ACTIONS")
+    print("-"*30)
     print("\nPriority Actions:")
     for action in recommendations['priority_actions']:
         print(f"• {action}")
@@ -67,7 +88,34 @@ def main():
     for step in recommendations['next_steps']:
         print(f"• {step}")
 
-    prepare_visualization_data(historical_quiz_df, insights, topic_stats)
+    print("\n4. STUDENT PERSONA")
+    print("-"*30)
+    print(f"Learning Type: {persona['learning_type']}")
+    
+    print("\nKey Traits:")
+    for trait in persona['key_traits']:
+        print(f"• {trait}")
+    
+    print("\nLearning Style:")
+    for style in persona['learning_style']:
+        print(f"• {style}")
+
+    print("\n5. PERFORMANCE LABELS")
+    print("-"*30)
+    print("\nStrengths:")
+    for strength in performance_labels['strengths']:
+        print(f"• {strength}")
+    
+    print("\nChallenges:")
+    for challenge in performance_labels['challenges']:
+        print(f"• {challenge}")
+
+    # Save data for visualization
+    prepare_visualization_data(historical_quiz_df, insights, topic_stats, recommendations, persona, performance_labels)
+    
+    print("\n" + "="*50)
+    print("Analysis complete. Check 'output/visualizations' for detailed graphs.")
+    print("="*50 + "\n")
 
 if __name__ == "__main__":
     main()

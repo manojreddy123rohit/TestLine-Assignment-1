@@ -1,134 +1,184 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer
+  BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer,
+  RadarChart, PolarGrid, PolarAngleAxis, Radar
 } from 'recharts';
 
-const StudentDashboard = () => {
-  const [dashboardData, setDashboardData] = useState(null);
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
-
-  useEffect(() => {
-    // Simulated data since we can't actually fetch in this environment
-    setDashboardData({
-      timelineData: [
-        { date: '2025-01-17', accuracy: 90, mistakesCorrected: 9 },
-        { date: '2025-01-16', accuracy: 100, mistakesCorrected: 3 },
-        { date: '2025-01-15', accuracy: 96, mistakesCorrected: 11 },
-        { date: '2025-01-14', accuracy: 90, mistakesCorrected: 1 },
-        { date: '2025-01-13', accuracy: 31, mistakesCorrected: 0 }
-      ],
-      topicPerformance: [
-        { name: 'Human Physiology', accuracy: 72 },
-        { name: 'Reproductive Health', accuracy: 43 },
-        { name: 'Human Reproduction', accuracy: 38 },
-        { name: 'Inheritance', accuracy: 30 }
-      ],
-      insights: {
-        topics: {
-          strong: ['Human Physiology'],
-          weak: ['Reproductive Health', 'Human Reproduction', 'Inheritance'],
-          needs_practice: ['Reproductive Health', 'Human Reproduction', 'Inheritance']
-        },
-        trending: {
-          overall_accuracy: 0.72,
-          recent_accuracy: 0.85
-        }
-      }
-    });
-  }, []);
-
-  if (!dashboardData) {
-    return <div className="w-full h-screen flex items-center justify-center">Loading...</div>;
+const sampleData = {
+  timelineData: [
+    { date: '2025-01-17', accuracy: 90, mistakesCorrected: 9 },
+    { date: '2025-01-16', accuracy: 100, mistakesCorrected: 3 },
+    { date: '2025-01-15', accuracy: 96, mistakesCorrected: 11 }
+  ],
+  topicPerformance: [
+    { name: 'Human Physiology', accuracy: 72 },
+    { name: 'Reproductive Health', accuracy: 43 },
+    { name: 'Human Reproduction', accuracy: 38 }
+  ],
+  insights: {
+    trending: {
+      overall_accuracy: 0.72,
+      recent_accuracy: 0.85,
+      improvement: true
+    },
+    topics: {
+      strong: ['Human Physiology'],
+      weak: ['Reproductive Health', 'Human Reproduction'],
+      needs_practice: ['Reproductive Health']
+    },
+    learning: {
+      mistake_correction_rate: 2.8,
+      recent_corrections: 3.2
+    }
+  },
+  performance_labels: {
+    strengths: ["Master of Human Physiology (72% accuracy)", "Consistent Improver"],
+    challenges: ["Needs Focus on Reproductive Health (43% accuracy)"]
+  },
+  recommendations: {
+    priority_actions: ["Prioritize Reproductive Health - Performance below 60%"]
+  },
+  persona: {
+    key_traits: ["Topic Master", "Quick Learner from Mistakes"],
+    learning_style: ["High Achiever", "Reflective Learner"]
   }
+};
 
-  const { timelineData, topicPerformance, insights } = dashboardData;
+const StudentDashboard = () => {
+  const [dashboardData] = useState(sampleData);
+  const COLORS = ['#4CAF50', '#2196F3', '#FFC107', '#FF5722', '#9C27B0'];
+
+  const MetricCard = ({ title, children, className = '' }) => (
+    <div className={`bg-green-50 rounded-lg shadow-sm p-6 ${className}`}>
+      <h3 className="text-xl font-semibold text-gray-800 mb-4">{title}</h3>
+      {children}
+    </div>
+  );
+
+  const ListCard = ({ items }) => (
+    <div className="space-y-2">
+      {items.map((item, idx) => (
+        <div key={idx} className="bg-white p-3 rounded shadow-sm">
+          {item}
+        </div>
+      ))}
+    </div>
+  );
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-4 space-y-8">
-      <h1 className="text-2xl font-bold text-center mb-8">Student Performance Analysis Dashboard</h1>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-7xl mx-auto space-y-6">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
+          Student Performance Analysis Dashboard
+        </h1>
 
-      {/* Performance Timeline */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">Performance Timeline</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={timelineData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="accuracy" stroke="#8884d8" name="Accuracy (%)" />
-            <Line type="monotone" dataKey="mistakesCorrected" stroke="#82ca9d" name="Mistakes Corrected" />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+        {/* Charts Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <MetricCard title="Performance Timeline">
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={dashboardData.timelineData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="accuracy" stroke="#4CAF50" name="Accuracy %" strokeWidth={2} />
+                <Line type="monotone" dataKey="mistakesCorrected" stroke="#2196F3" name="Mistakes Corrected" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </MetricCard>
 
-      {/* Topic Performance */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">Topic Performance</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={topicPerformance}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="accuracy" fill="#8884d8" name="Accuracy (%)" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-
-      {/* Strength and Weakness Distribution */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white p-4 rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-4">Topic Distribution</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={[
-                  { name: 'Strong Topics', value: insights.topics.strong.length },
-                  { name: 'Weak Topics', value: insights.topics.weak.length },
-                  { name: 'Needs Practice', value: insights.topics.needs_practice.length }
-                ]}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({name, percent}) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                outerRadius={80}
-                fill="#8884d8"
-              >
-                {(entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                )}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+          <MetricCard title="Topic Performance">
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={dashboardData.topicPerformance}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="accuracy" fill="#4CAF50" name="Accuracy %" />
+              </BarChart>
+            </ResponsiveContainer>
+          </MetricCard>
         </div>
 
-        {/* Recent vs Overall Performance */}
-        <div className="bg-white p-4 rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-4">Performance Comparison</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart 
-              data={[
-                {
-                  name: 'Overall',
-                  accuracy: insights.trending.overall_accuracy * 100
-                },
-                {
-                  name: 'Recent',
-                  accuracy: insights.trending.recent_accuracy * 100
-                }
-              ]}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="accuracy" fill="#82ca9d" name="Accuracy (%)" />
-            </BarChart>
-          </ResponsiveContainer>
+        {/* Performance Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Strengths Card */}
+          <MetricCard title="Strengths">
+            <ListCard items={dashboardData.performance_labels.strengths} />
+          </MetricCard>
+
+          {/* Challenges Card */}
+          <MetricCard title="Challenges">
+            <ListCard items={dashboardData.performance_labels.challenges} />
+          </MetricCard>
+
+          {/* Recommendations Card */}
+          <MetricCard title="Recommendations">
+            <ListCard items={dashboardData.recommendations.priority_actions} />
+          </MetricCard>
+        </div>
+
+        {/* Student Profile Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Key Traits Card */}
+          <MetricCard title="Key Traits">
+            <ListCard items={dashboardData.persona.key_traits} />
+          </MetricCard>
+
+          {/* Learning Style Card */}
+          <MetricCard title="Learning Style">
+            <ListCard items={dashboardData.persona.learning_style} />
+          </MetricCard>
+        </div>
+
+        {/* Distribution Charts */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <MetricCard title="Topic Distribution">
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={[
+                    { name: 'Strong Topics', value: dashboardData.insights.topics.strong.length },
+                    { name: 'Weak Topics', value: dashboardData.insights.topics.weak.length },
+                    { name: 'Practice Needed', value: dashboardData.insights.topics.needs_practice.length }
+                  ]}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={100}
+                  fill="#8884d8"
+                  dataKey="value"
+                  label={({name, percent}) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                >
+                  {({ data }) => data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </MetricCard>
+
+          <MetricCard title="Performance Overview">
+            <ResponsiveContainer width="100%" height={300}>
+              <RadarChart 
+                cx="50%" 
+                cy="50%" 
+                outerRadius="80%" 
+                data={[
+                  { subject: 'Accuracy', value: dashboardData.insights.trending.recent_accuracy * 100 },
+                  { subject: 'Improvement', value: dashboardData.insights.trending.improvement ? 80 : 40 },
+                  { subject: 'Corrections', value: (dashboardData.insights.learning.recent_corrections / 5) * 100 }
+                ]}
+              >
+                <PolarGrid />
+                <PolarAngleAxis dataKey="subject" />
+                <Radar name="Performance" dataKey="value" stroke="#4CAF50" fill="#4CAF50" fillOpacity={0.6} />
+                <Tooltip />
+              </RadarChart>
+            </ResponsiveContainer>
+          </MetricCard>
         </div>
       </div>
     </div>
