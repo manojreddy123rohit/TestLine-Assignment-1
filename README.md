@@ -130,3 +130,13 @@ python backend/main.py
 3. Commit your changes
 4. Push to the branch
 5. Create a Pull Request
+Output:
+![alt text](image-1.png)
+Learning progress:
+![alt text](image.png)
+Performance timeline:
+![alt text](image-2.png)
+Topic distribution:
+![alt text](image-3.png)
+Topic performance:
+![alt text](image-4.png)
