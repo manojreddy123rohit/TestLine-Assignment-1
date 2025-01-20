@@ -1,65 +1,55 @@
-# Student Quiz Performance Analyzer
+# Quiz Performance Analysis System
 
-A comprehensive analysis tool for evaluating student quiz performance and providing personalized learning recommendations.
+A comprehensive analysis tool that examines student quiz performance and provides personalized recommendations for NEET preparation.
 
 ## Project Overview
 
-This project analyzes student quiz performance data to:
+The system analyzes quiz performance data to:
 - Track performance trends across different topics
 - Identify strengths and weaknesses
 - Generate personalized study recommendations
-- Visualize performance metrics through an interactive dashboard
+- Visualize performance metrics through interactive graphs
 
-## Features
+## Key Features
 
-- **Performance Analysis**
-  - Topic-wise performance tracking
-  - Accuracy trends analysis
-  - Mistake correction patterns
-  - Learning effectiveness metrics
+### 1. Performance Analysis
+- Topic-wise performance tracking
+- Accuracy trends over time
+- Mistake correction patterns
+- Learning effectiveness metrics
 
-- **Personalized Recommendations**
-  - Priority topics identification
-  - Study strategy suggestions
-  - Practice recommendations
+### 2. Personalized Recommendations
+- Priority topics identification
+- Custom study strategies
+- Practice suggestions based on performance
 
-- **Interactive Dashboard**
-  - Performance timeline visualization
-  - Topic performance comparison
-  - Strength/weakness distribution
-  - Text-based insights
+### 3. Data Visualization
+- Interactive performance timeline
+- Topic performance comparison
+- Strength/weakness distribution
+- Learning progress heatmap
 
-## Setup Instructions
+## Visualizations
 
-1. **Backend Setup**
-```bash
-# Clone the repository
-git clone [repository-url]
+### Performance Timeline
+![Performance Timeline](output/visualizations/performance_timeline.png)
+- Shows accuracy trends and mistakes corrected over time
+- Helps track improvement patterns
 
-# Install Python dependencies
-pip install pandas numpy requests
+### Topic Performance
+![Topic Performance](output/visualizations/topic_performance.png)
+- Displays performance across different topics
+- Color-coded for easy identification of strong/weak areas
 
-# Navigate to backend directory
-cd backend
+### Topic Distribution
+![Topic Distribution](output/visualizations/topic_distribution.png)
+- Shows distribution of topic mastery
+- Helps identify areas needing focus
 
-# Run the analysis
-python main.py
-```
-
-2. **Frontend Setup**
-```bash
-# Navigate to frontend directory
-cd frontend
-
-# Install dependencies
-npm install
-
-# Install required packages
-npm install recharts
-
-# Start the development server
-npm start
-```
+### Learning Progress
+![Learning Progress](output/visualizations/learning_progress.png)
+- Heatmap showing progress in key metrics
+- Tracks improvement across different parameters
 
 ## Project Structure
 ```
@@ -67,54 +57,76 @@ quiz_analysis/
 ├── backend/
 │   ├── main.py           # Main execution script
 │   ├── utils.py          # Utility functions
-│   └── output/           # Generated visualization data
-│       └── viz_data.json
+│   └── output/           # Generated visualizations
+│       └── visualizations/
+│           └── *.png
 │
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   └── StudentDashboard.js
-│   │   ├── App.js
-│   │   └── index.js
-│   └── package.json
+├── frontend/             # Optional React dashboard
+│   └── src/
+│       └── components/
+│           └── StudentDashboard.jsx
+│
+└── requirements.txt      # Project dependencies
 ```
 
-## Approach
+## Setup Instructions
 
-1. **Data Processing**
-   - Load quiz data from API endpoints
-   - Clean and standardize data formats
-   - Calculate performance metrics
+1. Clone the repository:
+```bash
+git clone [repository-url]
+cd quiz-analysis
+```
 
-2. **Analysis**
-   - Generate performance insights
-   - Identify learning patterns
-   - Calculate topic-wise statistics
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-3. **Recommendation Generation**
-   - Analyze weak areas
-   - Generate personalized study strategies
-   - Create actionable recommendations
+3. Run the analysis:
+```bash
+python backend/main.py
+```
 
-4. **Visualization**
-   - Interactive performance timeline
-   - Topic performance comparison
-   - Strength/weakness distribution
-   - Comprehensive text insights
+## Technologies Used
+- Python
+- Pandas (Data Processing)
+- Matplotlib/Seaborn (Visualization)
+- React (Optional Frontend)
+- Recharts (Interactive Charts)
+
+## Implementation Details
+
+### Data Processing
+- Loads quiz data from API endpoints
+- Cleans and standardizes data formats
+- Calculates performance metrics
+
+### Analysis Components
+- Topic performance analysis
+- Time-based trend analysis
+- Student persona identification
+- Recommendation generation
+
+### Visualization Components
+- Performance timeline charts
+- Topic performance bars
+- Distribution pie charts
+- Progress heatmaps
 
 ## API Endpoints
 - Current Quiz Data: https://api.jsonserve.com/rJvd7g
 - Quiz Endpoint Data: https://www.jsonkeeper.com/b/LLQT
 - Historical Quiz Data: https://api.jsonserve.com/XgAgFJ
 
-## Technologies Used
-- Python (Data Analysis)
-- React (Frontend)
-- Recharts (Visualization)
-- Pandas (Data Processing)
-
 ## Future Enhancements
 1. Machine Learning integration for predictive analytics
-2. Additional visualization types
-3. Real-time data updates
-4. Peer comparison features
+2. Real-time data updates
+3. Peer comparison features
+4. Mobile app integration
+
+## Contributing
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
