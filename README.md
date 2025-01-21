@@ -130,6 +130,7 @@ python backend/main.py
 3. Commit your changes
 4. Push to the branch
 5. Create a Pull Request
+   
 Output:
 ![alt text](image-1.png)
 Learning progress:
