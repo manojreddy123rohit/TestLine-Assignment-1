@@ -141,3 +141,6 @@ Topic distribution:
 ![alt text](image-3.png)
 Topic performance:
 ![alt text](image-4.png)
+
+I am currently working on an alternative approach for visualization using React.js
+As of now I've used visualization libraries 
