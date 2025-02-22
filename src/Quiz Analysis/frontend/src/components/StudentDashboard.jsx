@@ -1,53 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer,
   RadarChart, PolarGrid, PolarAngleAxis, Radar
 } from 'recharts';
 
-const sampleData = {
-  timelineData: [
-    { date: '2025-01-17', accuracy: 90, mistakesCorrected: 9 },
-    { date: '2025-01-16', accuracy: 100, mistakesCorrected: 3 },
-    { date: '2025-01-15', accuracy: 96, mistakesCorrected: 11 }
-  ],
-  topicPerformance: [
-    { name: 'Human Physiology', accuracy: 72 },
-    { name: 'Reproductive Health', accuracy: 43 },
-    { name: 'Human Reproduction', accuracy: 38 }
-  ],
-  insights: {
-    trending: {
-      overall_accuracy: 0.72,
-      recent_accuracy: 0.85,
-      improvement: true
-    },
-    topics: {
-      strong: ['Human Physiology'],
-      weak: ['Reproductive Health', 'Human Reproduction'],
-      needs_practice: ['Reproductive Health']
-    },
-    learning: {
-      mistake_correction_rate: 2.8,
-      recent_corrections: 3.2
-    }
-  },
-  performance_labels: {
-    strengths: ["Master of Human Physiology (72% accuracy)", "Consistent Improver"],
-    challenges: ["Needs Focus on Reproductive Health (43% accuracy)"]
-  },
-  recommendations: {
-    priority_actions: ["Prioritize Reproductive Health - Performance below 60%"]
-  },
-  persona: {
-    key_traits: ["Topic Master", "Quick Learner from Mistakes"],
-    learning_style: ["High Achiever", "Reflective Learner"]
-  }
-};
-
 const StudentDashboard = () => {
-  const [dashboardData] = useState(sampleData);
+  const [dashboardData, setDashboardData] = useState(null);
   const COLORS = ['#4CAF50', '#2196F3', '#FFC107', '#FF5722', '#9C27B0'];
+
+  useEffect(() => {
+    fetch('/data/viz_data.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Fetched data:', data);
+        setDashboardData(data);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+  if (!dashboardData) {
+    return <div>Loading...</div>;
+  }
 
   const MetricCard = ({ title, children, className = '' }) => (
     <div className={`bg-green-50 rounded-lg shadow-sm p-6 ${className}`}>

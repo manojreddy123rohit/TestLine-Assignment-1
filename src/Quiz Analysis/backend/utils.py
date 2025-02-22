@@ -16,26 +16,57 @@ def process_current_quiz_data(current_quiz_endpoint_data):
         })
     return pd.DataFrame(current_quiz_questions)
 
-def process_historical_quiz_data(historical_quiz_data):
-    historical_quiz_results = []
-    for result in historical_quiz_data:
-        historical_quiz_results.append({
-            "quiz_id": result["quiz_id"],
-            "quiz_topic": result["quiz"]["topic"],
-            "score": result["score"],
-            "accuracy": result["accuracy"],
-            "final_score": result["final_score"],
-            "mistakes_corrected": result["mistakes_corrected"],
-            "correct_answers": result["correct_answers"],
-            "incorrect_answers": result["incorrect_answers"],
-            "duration": result["duration"],
-            "submitted_at": pd.to_datetime(result["submitted_at"]),
-            "response_map": result["response_map"]
-        })
+def prepare_visualization_data(historical_quiz_df, insights, topic_stats, recommendations, persona, performance_labels):
+    viz_data = {
+        'timelineData': [
+            {
+                'date': row['submitted_at'].strftime('%Y-%m-%d'),
+                'accuracy': float(round(row['accuracy'] * 100, 2)),
+                'mistakesCorrected': int(row['mistakes_corrected'])
+            } for _, row in historical_quiz_df.iterrows()
+        ],
+        'topicPerformance': [
+            {
+                'name': str(topic),
+                'accuracy': float(round(stats['avg_accuracy'] * 100, 2))
+            } for topic, stats in topic_stats.iterrows()
+        ],
+        'insights': {
+            'trending': {
+                'recent_accuracy': float(insights['trending']['recent_accuracy']),
+                'overall_accuracy': float(insights['trending']['overall_accuracy']),
+                'improvement': bool(insights['trending']['improvement'])
+            },
+            'topics': {
+                'strong': list(insights['topics']['strong']),
+                'weak': list(insights['topics']['weak']),
+                'needs_practice': list(insights['topics']['needs_practice'])
+            },
+            'learning': {
+                'mistake_correction_rate': float(insights['learning']['mistake_correction_rate']),
+                'recent_corrections': float(insights['learning']['recent_corrections'])
+            }
+        },
+        'recommendations': {
+            'priority_actions': list(recommendations['priority_actions']),
+            'study_strategy': list(recommendations['study_strategy']),
+            'next_steps': list(recommendations['next_steps'])
+        },
+        'persona': {
+            'learning_type': str(persona['learning_type']),
+            'key_traits': list(persona['key_traits']),
+            'learning_style': list(persona['learning_style'])
+        },
+        'performance_labels': {
+            'strengths': list(performance_labels['strengths']),
+            'challenges': list(performance_labels['challenges'])
+        }
+    }
     
-    historical_quiz_df = pd.DataFrame(historical_quiz_results)
-    return historical_quiz_df.sort_values('submitted_at')
-
+    os.makedirs('frontend/public/data', exist_ok=True)
+    with open('frontend/public/data/viz_data.json', 'w') as f:
+        json.dump(viz_data, f, default=str)
+        
 def create_expanded_options(current_quiz_df):
     option_rows = []
     for _, row in current_quiz_df.iterrows():
